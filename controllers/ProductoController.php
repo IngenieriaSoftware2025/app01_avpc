@@ -43,7 +43,20 @@ class ProductoController extends ActiveRecord
             return;
         }
 
-       
+       $_POST['usuario_nombres'] = htmlspecialchars($_POST['usuario_nombres']);
+
+        $cantidad_nombres = strlen($_POST['usuario_nombres']);
+
+
+        if ($cantidad_nombres < 2) {
+
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mennsaje' => 'la cantidad debe ser mayor a dos'
+            ]);
+            return;
+        }
     }
 
     public static function buscarAPI()
@@ -77,6 +90,37 @@ class ProductoController extends ActiveRecord
             ]);
         }
     }
+
+
+
+
+public static function buscarAPI()
+    {
+
+        try {
+
+            // $data = Productos::all();
+
+            $sql = "SELECT * FROM Productos where usuario_situacion = 1";
+            $data = self::fetchArray($sql);
+
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'Productos obtenidos correctamente',
+                'data' => $data
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al obtener los Productos',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+
 
     public static function modificarAPI()
     {
