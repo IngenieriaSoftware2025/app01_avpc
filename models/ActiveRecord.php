@@ -183,16 +183,26 @@ class ActiveRecord {
         return $array;
     }
 
-    public static function fetchArray($query){
-        $resultado = self::$db->query($query);
-        $respuesta = $resultado->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($respuesta as $value) {
-            $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
-        }
-        $resultado->closeCursor();
-        return $data;
-    }
+    // public static function fetchArray($query){
+    //     $resultado = self::$db->query($query);
+    //     $respuesta = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    //     foreach ($respuesta as $value) {
+    //         $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
+    //     }
+    //     $resultado->closeCursor();
+    //     return $data;
+    // }
 
+    public static function fetchArray($query){
+    $resultado = self::$db->query($query);
+    $respuesta = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    $data = []; // Esta línea faltaba - inicializar el array
+    foreach ($respuesta as $value) {
+        $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
+    }
+    $resultado->closeCursor();
+    return $data;
+}
         
     public static function fetchFirst($query){
         $resultado = self::$db->query($query);
