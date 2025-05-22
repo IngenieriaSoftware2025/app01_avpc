@@ -110,6 +110,31 @@ const BuscarProductos = async () => {
 }
 
 
+
+const llenarFormulario = (event) => {
+    const datos = event.currentTarget.dataset
+
+    document.getElementById('producto_id').value = datos.id
+    document.getElementById('producto_nombre').value = datos.nombre
+    document.getElementById('producto_cantidad').value = datos.cantidad
+    document.getElementById('producto_categoria_id').value = datos.categoria
+    document.getElementById('producto_prioridad').value = datos.prioridad
+
+    BtnGuardar.classList.add('d-none');
+    BtnModificar.classList.remove('d-none');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+}
+
+const limpiarTodo = () => {
+    FormProductos.reset();
+    BtnGuardar.classList.remove('d-none');
+    BtnModificar.classList.add('d-none');
+}
+
 const ModificarProducto = async (event) => {
     event.preventDefault();
     BtnModificar.disabled = true;
@@ -164,7 +189,56 @@ const ModificarProducto = async (event) => {
     BtnModificar.disabled = false;
 }
 
+const EliminarProducto = async (e) => {
+    const idProducto = e.currentTarget.dataset.id
 
+    const AlertaConfirmarEliminar = await Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "¿Desea eliminar este producto?",
+        text: 'Esta acción no se puede deshacer',
+        showConfirmButton: true,
+        confirmButtonText: 'Sí, Eliminar',
+        confirmButtonColor: '#d33',
+        cancelButtonText: 'No, Cancelar',
+        showCancelButton: true
+    });
+
+    if (AlertaConfirmarEliminar.isConfirmed) {
+        const url = `/app01_avpc/productos/eliminar?id=${idProducto}`;
+        const config = {
+            method: 'GET'
+        }
+
+        try {
+            const consulta = await fetch(url, config);
+            const respuesta = await consulta.json();
+            const { codigo, mensaje } = respuesta;
+
+            if (codigo == 1) {
+                await Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Éxito",
+                    text: mensaje,
+                    showConfirmButton: true,
+                });
+
+                BuscarProductos();
+            } else {
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Error",
+                    text: mensaje,
+                    showConfirmButton: true,
+                });
+            }
+        } catch (error) {
+            console.error('Error en EliminarProducto:', error);
+        }
+    }
+}
 
 CargarCategorias();
 BuscarProductos();

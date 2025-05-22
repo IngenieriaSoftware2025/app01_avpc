@@ -270,4 +270,49 @@ class ProductoController extends ActiveRecord
         }
     }
 
-   
+    public static function categoriasAPI()
+    {
+        try {
+            $sql = "SELECT * FROM categorias WHERE categoria_situacion = 1 ORDER BY categoria_nombre";
+            $data = self::fetchArray($sql);
+
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'Categorías obtenidas correctamente',
+                'data' => $data
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al obtener las categorías',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+
+
+
+    public static function buscarCompradosAPI()
+{
+    try {
+        $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
+                FROM productos p 
+                INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
+                WHERE p.producto_situacion = 1 
+                AND p.producto_comprado = 1
+                ORDER BY c.categoria_nombre, 
+                CASE p.producto_prioridad 
+                    WHEN 'A' THEN 1 
+                    WHEN 'M' THEN 2 
+                    WHEN 'B' THEN 3 
+                END";
+        
+        $data = self::fetchArray($sql);
+    }
+}
+}
+
+
