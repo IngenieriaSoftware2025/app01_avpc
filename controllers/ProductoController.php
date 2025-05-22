@@ -43,17 +43,60 @@ class ProductoController extends ActiveRecord
             return;
         }
 
-       $_POST['usuario_nombres'] = htmlspecialchars($_POST['usuario_nombres']);
+        $_POST['producto_categoria_id'] = filter_var($_POST['producto_categoria_id'], FILTER_VALIDATE_INT);
+        $_POST['producto_prioridad'] = htmlspecialchars($_POST['producto_prioridad']);
 
-        $cantidad_nombres = strlen($_POST['usuario_nombres']);
+        $prioridad = $_POST['producto_prioridad'];
 
+        if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-        if ($cantidad_nombres < 2) {
+            // Verificar si el producto ya existe en la misma categoría
+            $sql_verificar = "SELECT COUNT(*) as total FROM productos 
+                            WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
+                            AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
+                            AND producto_situacion = 1";
+            
+            $verificacion = Productos::fetchFirst($sql_verificar);
+            
+            if ($verificacion['total'] > 0) {
+                http_response_code(400);
+                echo json_encode([
+                    'codigo' => 0,
+                    'mensaje' => 'Este producto ya existe en la categoría seleccionada'
+                ]);
+                return;
+            }
 
+            try {
+                $data = new Productos([
+                    'producto_nombre' => $_POST['producto_nombre'],
+                    'producto_cantidad' => $_POST['producto_cantidad'],
+                    'producto_categoria_id' => $_POST['producto_categoria_id'],
+                    'producto_prioridad' => $_POST['producto_prioridad'],
+                    'producto_comprado' => 0,
+                    'producto_situacion' => 1
+                ]);
+
+                $crear = $data->crear();
+
+                http_response_code(200);
+                echo json_encode([
+                    'codigo' => 1,
+                    'mensaje' => 'El producto ha sido agregado correctamente'
+                ]);
+            } catch (Exception $e) {
+                http_response_code(400);
+                echo json_encode([
+                    'codigo' => 0,
+                    'mensaje' => 'Error al guardar',
+                    'detalle' => $e->getMessage(),
+                ]);
+            }
+        } else {
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mennsaje' => 'la cantidad debe ser mayor a dos'
+                'mensaje' => 'La prioridad solo puede ser "A, M, B"'
             ]);
             return;
         }
@@ -91,37 +134,6 @@ class ProductoController extends ActiveRecord
         }
     }
 
-
-
-
-public static function buscarAPI()
-    {
-
-        try {
-
-            // $data = Productos::all();
-
-            $sql = "SELECT * FROM Productos where usuario_situacion = 1";
-            $data = self::fetchArray($sql);
-
-            http_response_code(200);
-            echo json_encode([
-                'codigo' => 1,
-                'mensaje' => 'Productos obtenidos correctamente',
-                'data' => $data
-            ]);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo json_encode([
-                'codigo' => 0,
-                'mensaje' => 'Error al obtener los Productos',
-                'detalle' => $e->getMessage(),
-            ]);
-        }
-    }
-
-
-
     public static function modificarAPI()
     {
         getHeadersApi();
@@ -158,7 +170,7 @@ public static function buscarAPI()
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-
+            // Verificar si el producto ya existe en la misma categoría (excluyendo el actual)
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
@@ -210,5 +222,52 @@ public static function buscarAPI()
         }
     }
 
-  
-}
+    public static function EliminarAPI()
+    {
+        try {
+            $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+
+            $ejecutar = Productos::EliminarProducto($id);
+
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'El producto ha sido eliminado correctamente'
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al Eliminar',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public static function marcarCompradoAPI()
+    {
+        try {
+            $id = filter_var($_POST['producto_id'], FILTER_SANITIZE_NUMBER_INT);
+            $comprado = filter_var($_POST['producto_comprado'], FILTER_VALIDATE_INT);
+
+            $sql = "UPDATE productos SET producto_comprado = $comprado WHERE producto_id = $id";
+            $ejecutar = self::SQL($sql);
+
+            $mensaje = $comprado == 1 ? 'Producto marcado como comprado' : 'Producto desmarcado como comprado';
+
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => $mensaje
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al actualizar',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
+    }
+
+   
