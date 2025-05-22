@@ -50,7 +50,6 @@ class ProductoController extends ActiveRecord
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-            // Verificar si el producto ya existe en la misma categoría
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
@@ -170,7 +169,7 @@ class ProductoController extends ActiveRecord
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-            // Verificar si el producto ya existe en la misma categoría (excluyendo el actual)
+
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
@@ -294,25 +293,5 @@ class ProductoController extends ActiveRecord
 
 
 
-
-    public static function buscarCompradosAPI()
-{
-    try {
-        $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
-                FROM productos p 
-                INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
-                WHERE p.producto_situacion = 1 
-                AND p.producto_comprado = 1
-                ORDER BY c.categoria_nombre, 
-                CASE p.producto_prioridad 
-                    WHEN 'A' THEN 1 
-                    WHEN 'M' THEN 2 
-                    WHEN 'B' THEN 3 
-                END";
-        
-        $data = self::fetchArray($sql);
-    }
-}
-}
 
 
