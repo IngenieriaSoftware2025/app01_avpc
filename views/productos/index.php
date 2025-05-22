@@ -2,7 +2,7 @@
     <div class="row mb-5 justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-3">
-                <div class="card-body" style="background: linear-gradient(135deg, #f8fafc 40%, #c6e1f7 100%);">
+                <div class="card-body" style="background: linear-gradient(135deg,rgb(110, 154, 198) 40%, #c6e1f7 100%);">
                     <div class="mb-4 text-center">
                         <h5 class="fw-bold text-secondary mb-2">¡Sistema de Gestión de Productos!</h5>
                         <h3 class="fw-bold mb-0" style="color: #1e5f8a;">LISTA DE COMPRAS</h3>
@@ -11,7 +11,7 @@
                         <input type="hidden" id="producto_id" name="producto_id">
                         <div class="row g-4 mb-3">
                             <div class="col-md-6">
-                                <label for="producto_nombre" class="form-label fw-semibold">Nombre del Producto</label>
+                                <label for="producto_nombre" class="form-label fw-semibold">Nombres del Producto</label>
                                 <input type="text" class="form-control form-control-lg rounded-3" id="producto_nombre" name="producto_nombre" >
                             </div>
                             <div class="col-md-6">
@@ -70,7 +70,7 @@
 
     <div class="row justify-content-center mt-5" id="SeccionComprados" style="display: none;">
         <div class="col-11">
-            <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #28a745 !important;">
+            <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solidrgb(54, 174, 82) !important;">
                 <div class="card-body">
                     <h3 class="text-center mb-4">Productos Comprados</h3>
                     <div class="table-responsive">

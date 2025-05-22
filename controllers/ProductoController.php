@@ -32,16 +32,7 @@ class ProductoController extends ActiveRecord
             return;
         }
 
-        $_POST['producto_cantidad'] = filter_var($_POST['producto_cantidad'], FILTER_VALIDATE_INT);
-
-        if ($_POST['producto_cantidad'] < 1) {
-            http_response_code(400);
-            echo json_encode([
-                'codigo' => 0,
-                'mensaje' => 'La cantidad debe ser mayor a 0'
-            ]);
-            return;
-        }
+    
 
         $_POST['producto_categoria_id'] = filter_var($_POST['producto_categoria_id'], FILTER_VALIDATE_INT);
         $_POST['producto_prioridad'] = htmlspecialchars($_POST['producto_prioridad']);
@@ -243,31 +234,7 @@ class ProductoController extends ActiveRecord
         }
     }
 
-    public static function marcarCompradoAPI()
-    {
-        try {
-            $id = filter_var($_POST['producto_id'], FILTER_SANITIZE_NUMBER_INT);
-            $comprado = filter_var($_POST['producto_comprado'], FILTER_VALIDATE_INT);
-
-            $sql = "UPDATE productos SET producto_comprado = $comprado WHERE producto_id = $id";
-            $ejecutar = self::SQL($sql);
-
-            $mensaje = $comprado == 1 ? 'Producto marcado como comprado' : 'Producto desmarcado como comprado';
-
-            http_response_code(200);
-            echo json_encode([
-                'codigo' => 1,
-                'mensaje' => $mensaje
-            ]);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo json_encode([
-                'codigo' => 0,
-                'mensaje' => 'Error al actualizar',
-                'detalle' => $e->getMessage(),
-            ]);
-        }
-    }
+   
 
     public static function categoriasAPI()
     {
@@ -292,6 +259,6 @@ class ProductoController extends ActiveRecord
     }
 
 
-
+}
 
 

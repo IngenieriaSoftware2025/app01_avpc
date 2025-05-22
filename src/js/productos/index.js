@@ -129,34 +129,12 @@ const llenarFormulario = (event) => {
     })
 }
 
-const limpiarTodo = () => {
-    FormProductos.reset();
-    BtnGuardar.classList.remove('d-none');
-    BtnModificar.classList.add('d-none');
-}
 
 const ModificarProducto = async (event) => {
     event.preventDefault();
     BtnModificar.disabled = true;
 
-    if (!validarFormulario(FormProductos, [''])) {
-        Swal.fire({
-            position: "center",
-            icon: "info",
-            title: "FORMULARIO INCOMPLETO",
-            text: "Debe de validar todos los campos",
-            showConfirmButton: true,
-        });
-        BtnModificar.disabled = false;
-        return;
-    }
-
-    const body = new FormData(FormProductos);
-    const url = '/app01_avpc/productos/modificarAPI';
-    const config = {
-        method: 'POST',
-        body
-    }
+    
 
     try {
         const respuesta = await fetch(url, config);
@@ -184,7 +162,7 @@ const ModificarProducto = async (event) => {
             });
         }
     } catch (error) {
-        console.error('Error en ModificarProducto:', error);
+        console.error('Errores en ModificarProducto:', error);
     }
     BtnModificar.disabled = false;
 }
@@ -244,7 +222,5 @@ CargarCategorias();
 BuscarProductos();
 datatable.on('click', '.eliminar', EliminarProducto);
 datatable.on('click', '.modificar', llenarFormulario);
-datatable.on('click', '.marcar-comprado', MarcarComprado);
 FormProductos.addEventListener('submit', GuardarProducto);
-BtnLimpiar.addEventListener('click', limpiarTodo);
 BtnModificar.addEventListener('click', ModificarProducto);

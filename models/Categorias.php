@@ -24,3 +24,6 @@ class Categorias extends ActiveRecord {
         $this->categoria_situacion = $args['categoria_situacion'] ?? 1;
     }
 }
+
+
+
