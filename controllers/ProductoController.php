@@ -118,15 +118,17 @@ class ProductoController extends ActiveRecord
     {
         try {
             $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
-                    FROM productos p 
-                    INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
-                    WHERE p.producto_situacion = 1 
-                    ORDER BY c.categoria_nombre, 
-                    CASE p.producto_prioridad 
-                        WHEN 'A' THEN 1 
-                        WHEN 'M' THEN 2 
-                        WHEN 'B' THEN 3 
-                    END, p.producto_comprado";
+        FROM productos p 
+        INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
+        WHERE p.producto_situacion = 1 
+        ORDER BY 
+            c.categoria_nombre ASC,
+            CASE p.producto_prioridad 
+                WHEN 'A' THEN 1 
+                WHEN 'M' THEN 2 
+                WHEN 'B' THEN 3 
+            END ASC,
+            p.producto_comprado ASC";
             
             $data = self::fetchArray($sql);
 
@@ -296,7 +298,6 @@ class ProductoController extends ActiveRecord
 
 
 
-
     public static function categoriasAPI()
     {
         try {
@@ -323,7 +324,7 @@ class ProductoController extends ActiveRecord
 
 
 
-    
+
 
     public static function buscarCompradosAPI()
 {

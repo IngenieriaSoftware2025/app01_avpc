@@ -57,7 +57,7 @@
         <div class="col-11">
             <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #1e5f8a !important;">
                 <div class="card-body">
-                    <h3 class="text-center mb-4">LISTA DE PRODUCTOS</h3>
+                    <h3 class="text-center mb-4">LISTADO DE PRODUCTOS</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden" id="TableProductos">
                     

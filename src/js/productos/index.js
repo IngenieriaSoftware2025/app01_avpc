@@ -132,7 +132,7 @@ const datatable = new DataTable('#TableProductos', {
     `,
     language: lenguaje,
     data: [],
-    order: [[3, 'asc'], [4, 'desc']],
+    order: [[3, 'asc'], [4, 'asc']],
     columns: [
         { title: 'No.', data: 'producto_id', render: (data, type, row, meta) => meta.row + 1 },
         { title: 'Producto', data: 'producto_nombre', },
