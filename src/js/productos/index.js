@@ -11,16 +11,15 @@ const BtnLimpiar = document.getElementById('BtnLimpiar');
 
 
 const GuardarProducto = async (event) => {
-
-    event.preventDefault();
-    BtnGuardar.disabled = true;
+    event.preventDefault(); // evita que se recargue la página
+    BtnGuardar.disabled = true; // deshabilita el botón para evitar múltiples envíos
 
     if (!validarFormulario(FormProductos, ['producto_id'])) {
         Swal.fire({
             position: "center",
             icon: "info",
             title: "FORMULARIO INCOMPLETO",
-            text: "Debe de validar todos los campos",
+            text: "Debe de llenar todos los campos",
             showConfirmButton: true,
         });
         BtnGuardar.disabled = false;
@@ -69,7 +68,7 @@ const GuardarProducto = async (event) => {
             position: "center",
             icon: "error",
             title: "Error",
-            text: "Ocurrió un error inesperado",
+            text: "Ocurrió un error",
             showConfirmButton: true,
         });
     }
@@ -78,8 +77,15 @@ const GuardarProducto = async (event) => {
 
 
 
-const BuscarProductos = async () => {
 
+
+
+
+//Hace una petición GET al servidor para obtener todos los productos
+//Si es exitosa, limpia la tabla y carga los nuevos datos
+//Si hay error, muestra una alerta
+
+const BuscarProductos = async () => {
     const url = '/app01_avpc/productos/buscarAPI';
     const config = {
         method: 'GET'
@@ -117,8 +123,13 @@ const BuscarProductos = async () => {
 
 
 
+//tabla de productos
+//se crea la tabla con el id TableProductos
+//cuando se guarda un producto
+
 const datatable = new DataTable('#TableProductos', {
-    dom: `
+    //configuracion del layout
+    dom: ` 
         <"row mt-3 justify-content-between" 
             <"col" l> 
             <"col" B> 
@@ -209,6 +220,12 @@ const datatable = new DataTable('#TableProductos', {
 
 });
 
+
+
+
+
+
+//CARGA LAS CATEGORIAS EN EL SELECT DEL INDEX
 const CargarCategorias = async () => {
     const url = '/app01_avpc/productos/categoriasAPI';
     const config = {
@@ -236,8 +253,18 @@ const CargarCategorias = async () => {
     }
 }
 
+
+
+
+
+
+
+//llena los datos del formulario para modificar
+//cuando se da click en el boton modificar
+//se obtiene el id del producto y se llena el formulario
+
 const llenarFormulario = (event) => {
-    const datos = event.currentTarget.dataset
+    const datos = event.currentTarget.dataset //obtiene los datos del boton
 
     document.getElementById('producto_id').value = datos.id
     document.getElementById('producto_nombre').value = datos.nombre
@@ -259,6 +286,13 @@ const limpiarTodo = () => {
     BtnGuardar.classList.remove('d-none');
     BtnModificar.classList.add('d-none');
 }
+
+
+
+
+
+//modificar producto
+//se obtiene el id del producto y se hace una peticion al servidor
 
 const ModificarProducto = async (event) => {
     event.preventDefault();
@@ -314,6 +348,20 @@ const ModificarProducto = async (event) => {
     BtnModificar.disabled = false;
 }
 
+
+
+
+
+
+
+//eliminar producto
+//se obtiene el id del producto y se hace una peticion al servidor
+//para eliminar el producto
+//se muestra una alerta de confirmacion
+//si se confirma la eliminacion se hace la peticion
+//si se elimina el producto se muestra una alerta de exito
+
+
 const EliminarProducto = async (e) => {
     const idProducto = e.currentTarget.dataset.id
 
@@ -365,6 +413,15 @@ const EliminarProducto = async (e) => {
     }
 }
 
+
+
+
+
+//marcar como comprado
+//se obtiene el id del producto y se hace una peticion al servidor
+//para marcar el producto como comprado
+
+
 const MarcarComprado = async (e) => {
     const idProducto = e.currentTarget.dataset.id
 
@@ -386,12 +443,20 @@ const MarcarComprado = async (e) => {
         if (codigo == 1) {
             BuscarProductos();
             BuscarProductosComprados();
+
         }
     } catch (error) {
         console.log(error)
     }
 }
 
+
+
+
+
+
+
+// seccion de productos comprados
 
 const datatableComprados = new DataTable('#TableComprados', {
     language: lenguaje,
@@ -416,6 +481,17 @@ const datatableComprados = new DataTable('#TableComprados', {
 });
 
 
+
+
+
+//Obtiene las categorías del servidor
+//Limpia el select de categorías
+//Crea opciones dinámicamente para cada categoría
+//Las agrega al select del formulario
+
+
+// seccion de productos comprados
+// se obtiene la lista de productos comprados
 
 const BuscarProductosComprados = async () => {
     const url = '/app01_avpc/productos/buscarCompradosAPI';
@@ -449,3 +525,12 @@ datatable.on('click', '.marcar-comprado', MarcarComprado);
 FormProductos.addEventListener('submit', GuardarProducto);
 BtnLimpiar.addEventListener('click', limpiarTodo);
 BtnModificar.addEventListener('click', ModificarProducto);
+
+
+
+//Async/Await: Para manejar peticiones asíncronas
+//Fetch API: Para comunicarse con el servidor
+//FormData: Para enviar datos de formularios
+//Event Delegation: Para manejar eventos en elementos dinámicos
+//Template Literals: Para crear HTML dinámico
+//Destructuring: Para extraer datos de objetos (const { codigo, mensaje } = datos)

@@ -14,7 +14,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
 
         <div class="container-fluid">
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,8 +37,9 @@
                 </ul>
             </div>
         </div>
-
     </nav>
+
+
 
     <div class="progress fixed-bottom" style="height: 6px;">
         <div class="progress-bar progress-bar-animated bg-danger" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>

@@ -10,15 +10,12 @@ use MVC\Router;
 
 class ProductoController extends ActiveRecord
 {
-
-
-
     //RENDERIZAR PAGINA
     //Esta función se encarga de renderizar la vista de productos
     //Recibe el objeto Router como parámetro y lo utiliza para renderizar la vista
     //La vista se encuentra en la carpeta views/productos/index.php
 
-    public function renderizarPagina(Router $router)
+    public function renderizarPagina(Router $router) //renderizar muestra HTML
     {
         $router->render('productos/index', []);
     }
@@ -32,10 +29,10 @@ class ProductoController extends ActiveRecord
     //Si los datos son válidos, se crea un nuevo producto en la base de datos
     //Si los datos no son válidos, se devuelve un mensaje de error
 
-    public static function guardarAPI()
+    public static function guardarAPI() //devuelve JSON
     {
         getHeadersApi();
-
+        //Recibimos los datos del formulario, validacion nombre letras mayores a 2
         $_POST['producto_nombre'] = htmlspecialchars($_POST['producto_nombre']);
         $cantidad_nombre = strlen($_POST['producto_nombre']);
 
@@ -43,16 +40,15 @@ class ProductoController extends ActiveRecord
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mensaje' => 'El nombre del producto debe tener al menos 2 caracteres'
+                'mensaje' => 'El nombre del producto debe tener al menos 2 letras'
             ]);
             return;
         }
 
 
 
-
+        //Validamos la cantidad, que sea un número entero mayor a 0
         $_POST['producto_cantidad'] = filter_var($_POST['producto_cantidad'], FILTER_VALIDATE_INT);
-
         if ($_POST['producto_cantidad'] < 1) {
             http_response_code(400);
             echo json_encode([
@@ -72,14 +68,13 @@ class ProductoController extends ActiveRecord
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-
+            //verificar si el producto ya existe en la base de datos, si ya existe, no se puede agregar
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
                             AND producto_situacion = 1";
 
             $verificacion = Productos::fetchFirst($sql_verificar);
-
             if ($verificacion['total'] > 0) {
                 http_response_code(400);
                 echo json_encode([
@@ -89,6 +84,11 @@ class ProductoController extends ActiveRecord
                 return;
             }
 
+
+
+
+
+            //Crea un nuevo objeto Producto con los datos validados
             try {
                 $data = new Productos([
                     'producto_nombre' => $_POST['producto_nombre'],
@@ -99,13 +99,15 @@ class ProductoController extends ActiveRecord
                     'producto_situacion' => 1
                 ]);
 
+                //crear() inserta en la base de datos
                 $crear = $data->crear();
 
                 http_response_code(200);
                 echo json_encode([
                     'codigo' => 1,
-                    'mensaje' => 'El producto ha sido agregado correctamente'
+                    'mensaje' => 'El producto se guardo correctamente'
                 ]);
+                
             } catch (Exception $e) {
                 http_response_code(400);
                 echo json_encode([
@@ -114,15 +116,16 @@ class ProductoController extends ActiveRecord
                     'detalle' => $e->getMessage(),
                 ]);
             }
-        } else {
-            http_response_code(400);
-            echo json_encode([
-                'codigo' => 0,
-                'mensaje' => 'La prioridad solo puede ser "A, M, B"'
-            ]);
-            return;
-        }
+        // } else {
+        //     http_response_code(400);
+        //     echo json_encode([
+        //         'codigo' => 0,
+        //         'mensaje' => 'La prioridad solo puede ser "A, M, B"'
+        //     ]);
+        //     return;
+        // }
     }
+}
 
 
 
@@ -140,11 +143,12 @@ class ProductoController extends ActiveRecord
     public static function buscarAPI()
     {
         try {
+            //Une las tablas productos y categorias
             $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
         FROM productos p 
         INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
         WHERE p.producto_situacion = 1 
-        ORDER BY 
+        ORDER BY  
             c.categoria_nombre ASC,
             CASE p.producto_prioridad 
                 WHEN 'A' THEN 1 
@@ -153,6 +157,10 @@ class ProductoController extends ActiveRecord
             END ASC,
             p.producto_comprado ASC";
 
+
+
+            //Ejecuta la consulta y obtiene los resultados
+            //Devuelve respuesta JSON exitosa con los datos
             $data = self::fetchArray($sql);
 
             http_response_code(200);
@@ -316,6 +324,7 @@ class ProductoController extends ActiveRecord
 
 
 
+
     //MARCAR PRODUCTO COMO COMPRADO
     //Esta función se encarga de marcar un producto como comprado en la base de datos
     //Recibe el id del producto a través de un formulario y lo valida
@@ -413,14 +422,14 @@ class ProductoController extends ActiveRecord
             http_response_code(200);
             echo json_encode([
                 'codigo' => 1,
-                'mensaje' => 'Productos comprados obtenidos correctamente',
+                'mensaje' => 'Datos de Productos comprados obtenidos correctamente',
                 'data' => $data
             ]);
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mensaje' => 'Error al obtener los productos comprados',
+                'mensaje' => 'Error al obtener datos de los productos comprados',
                 'detalle' => $e->getMessage(),
             ]);
         }

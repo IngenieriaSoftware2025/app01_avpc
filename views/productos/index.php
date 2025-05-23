@@ -9,6 +9,8 @@
                         <h3 class="fw-bold mb-0" style="color: #1e5f8a;">LISTA DE COMPRAS</h3>
                     </div>
 
+                    <!-- name="producto_nombre" = lo que recibe PHP en $_POST['producto_nombre']
+                        id="producto_nombre" = lo que usa JavaScript para manipular el campo -->
                     <form id="FormProductos" class="p-4 bg-white rounded-4 shadow-sm border">
                         <input type="hidden" id="producto_id" name="producto_id">
                         <div class="row g-4 mb-3">
@@ -28,6 +30,8 @@
                                     <option value="">seleccione categoría</option>
                                 </select>
                             </div>
+
+
                             <div class="col-md-6">
                                 <label for="producto_prioridad" class="form-label fw-semibold">Prioridad</label>
                                 <select name="producto_prioridad" class="form-select form-select-lg rounded-3" id="producto_prioridad">
@@ -56,6 +60,8 @@
         </div>
     </div>
 
+
+
     <div class="row justify-content-center mt-5">
         <div class="col-11">
             <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #1e5f8a !important;">
@@ -71,6 +77,8 @@
         </div>
     </div>
 
+
+
     <div class="row justify-content-center mt-5" id="SeccionComprados" style="display: none;">
         <div class="col-13">
             <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #28a745 !important;">
@@ -82,7 +90,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
