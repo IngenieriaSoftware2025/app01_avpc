@@ -7,6 +7,8 @@ CREATE TABLE categorias (
     categoria_situacion SMALLINT DEFAULT 1
 );
 
+
+--sin categorias no puedo crear productos, hayy dependencia de datos
 CREATE TABLE productos (
     producto_id SERIAL PRIMARY KEY,
     producto_nombre VARCHAR(100) NOT NULL,

@@ -13,12 +13,24 @@ class ProductoController extends ActiveRecord
 
 
 
+    //RENDERIZAR PAGINA
+    //Esta función se encarga de renderizar la vista de productos
+    //Recibe el objeto Router como parámetro y lo utiliza para renderizar la vista
+    //La vista se encuentra en la carpeta views/productos/index.php
+    
     public function renderizarPagina(Router $router)
     {
         $router->render('productos/index', []);
     }
 
 
+
+
+    //GUARDAR PRODUCTO
+    //Esta función se encarga de guardar un producto en la base de datos
+    //Recibe los datos del producto a través de un formulario y los valida
+    //Si los datos son válidos, se crea un nuevo producto en la base de datos
+    //Si los datos no son válidos, se devuelve un mensaje de error
 
     public static function guardarAPI()
     {
@@ -50,6 +62,9 @@ class ProductoController extends ActiveRecord
             return;
         }
 
+
+
+        // Validar que la categoría existe
         $_POST['producto_categoria_id'] = filter_var($_POST['producto_categoria_id'], FILTER_VALIDATE_INT);
         $_POST['producto_prioridad'] = htmlspecialchars($_POST['producto_prioridad']);
 
@@ -114,6 +129,14 @@ class ProductoController extends ActiveRecord
 
 
 
+
+
+    //BUSCAR PRODUCTOS
+    //Esta función se encarga de buscar los productos en la base de datos
+    //Recibe los datos del producto a través de un formulario y los valida
+    //Si los datos son válidos, se busca el producto en la base de datos
+    //Si los datos no son válidos, se devuelve un mensaje de error
+
     public static function buscarAPI()
     {
         try {
@@ -151,7 +174,12 @@ class ProductoController extends ActiveRecord
 
 
 
-
+    //MODIFICAR PRODUCTO
+    //Esta función se encarga de modificar un producto en la base de datos
+    //Recibe los datos del producto a través de un formulario y los valida
+    //Si los datos son válidos, se modifica el producto en la base de datos
+    //Si los datos no son válidos, se devuelve un mensaje de error
+    
     public static function modificarAPI()
     {
         getHeadersApi();
@@ -240,6 +268,15 @@ class ProductoController extends ActiveRecord
         }
     }
 
+
+
+    //ELIMINAR PRODUCTO
+    //Esta función se encarga de eliminar un producto en la base de datos
+    //Recibe el id del producto a través de un formulario y lo valida
+    //Si el id es válido, se elimina el producto en la base de datos
+    //Si el id no es válido, se devuelve un mensaje de error
+    //Eliminamos el producto de la base de datos
+    
     public static function EliminarAPI()
     {
         try {
@@ -267,7 +304,12 @@ class ProductoController extends ActiveRecord
 
 
 
-
+    //MARCAR PRODUCTO COMO COMPRADO
+    //Esta función se encarga de marcar un producto como comprado en la base de datos
+    //Recibe el id del producto a través de un formulario y lo valida
+    //Si el id es válido, se marca el producto como comprado en la base de datos
+    //Si el id no es válido, se devuelve un mensaje de error
+    
     public static function marcarCompradoAPI()
     {
         try {
@@ -298,6 +340,14 @@ class ProductoController extends ActiveRecord
 
 
 
+
+    //OBTENER CATEGORÍAS
+    //Esta función se encarga de obtener las categorías de la base de datos
+    //Recibe el id de la categoría a través de un formulario y lo valida
+    //Si el id es válido, se obtiene la categoría en la base de datos
+    //Si el id no es válido, se devuelve un mensaje de error
+
+
     public static function categoriasAPI()
     {
         try {
@@ -325,6 +375,11 @@ class ProductoController extends ActiveRecord
 
 
 
+    //BUSCAR PRODUCTOS COMPRADOS
+    //Esta función se encarga de buscar los productos comprados en la base de datos
+    //Recibe los datos del producto a través de un formulario y los valida
+    //Si los datos son válidos, se busca el producto en la base de datos
+    //Si los datos no son válidos, se devuelve un mensaje de error
 
     public static function buscarCompradosAPI()
     {

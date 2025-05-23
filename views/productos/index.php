@@ -3,10 +3,12 @@
         <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-3">
                 <div class="card-body" style="background: linear-gradient(135deg, #f8fafc 40%, #c6e1f7 100%);">
-                    <div class="mb-4 text-center">
+                    
+                <div class="mb-4 text-center">
                         <h5 class="fw-bold text-secondary mb-2">¡Sistema de Gestión de Productos!</h5>
                         <h3 class="fw-bold mb-0" style="color: #1e5f8a;">LISTA DE COMPRAS</h3>
                     </div>
+
                     <form id="FormProductos" class="p-4 bg-white rounded-4 shadow-sm border">
                         <input type="hidden" id="producto_id" name="producto_id">
                         <div class="row g-4 mb-3">
@@ -36,6 +38,7 @@
                                 </select>
                             </div>
                         </div>
+                        
                         <div class="d-flex justify-content-center gap-3 mt-4">
                             <button class="btn btn-lg px-4 shadow-sm rounded-pill" type="submit" id="BtnGuardar" style="background-color: #1e5f8a; color: white;">
                                 <i class="bi bi-check-lg me-2"></i>Guardar
