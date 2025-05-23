@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . '/../includes/app.php';
 
 
@@ -9,7 +9,7 @@ use Controllers\AppController;
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
 
-$router->get('/', [AppController::class,'index']);
+$router->get('/', [AppController::class, 'index']);
 
 //ESTE ES EL URL PARA PRODUCTOS
 $router->get('/productos', [ProductoController::class, 'renderizarPagina']);

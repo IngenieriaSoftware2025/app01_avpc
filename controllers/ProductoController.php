@@ -62,9 +62,9 @@ class ProductoController extends ActiveRecord
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
                             AND producto_situacion = 1";
-            
+
             $verificacion = Productos::fetchFirst($sql_verificar);
-            
+
             if ($verificacion['total'] > 0) {
                 http_response_code(400);
                 echo json_encode([
@@ -129,7 +129,7 @@ class ProductoController extends ActiveRecord
                 WHEN 'B' THEN 3 
             END ASC,
             p.producto_comprado ASC";
-            
+
             $data = self::fetchArray($sql);
 
             http_response_code(200);
@@ -188,15 +188,15 @@ class ProductoController extends ActiveRecord
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-         
+
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
                             AND producto_situacion = 1 
                             AND producto_id != " . $id;
-            
+
             $verificacion = Productos::fetchFirst($sql_verificar);
-            
+
             if ($verificacion['total'] > 0) {
                 http_response_code(400);
                 echo json_encode([
@@ -327,9 +327,9 @@ class ProductoController extends ActiveRecord
 
 
     public static function buscarCompradosAPI()
-{
-    try {
-        $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
+    {
+        try {
+            $sql = "SELECT p.*, c.categoria_nombre, c.categoria_codigo 
                 FROM productos p 
                 INNER JOIN categorias c ON p.producto_categoria_id = c.categoria_id 
                 WHERE p.producto_situacion = 1 
@@ -340,22 +340,22 @@ class ProductoController extends ActiveRecord
                     WHEN 'M' THEN 2 
                     WHEN 'B' THEN 3 
                 END";
-        
-        $data = self::fetchArray($sql);
 
-        http_response_code(200);
-        echo json_encode([
-            'codigo' => 1,
-            'mensaje' => 'Productos comprados obtenidos correctamente',
-            'data' => $data
-        ]);
-    } catch (Exception $e) {
-        http_response_code(400);
-        echo json_encode([
-            'codigo' => 0,
-            'mensaje' => 'Error al obtener los productos comprados',
-            'detalle' => $e->getMessage(),
-        ]);
+            $data = self::fetchArray($sql);
+
+            http_response_code(200);
+            echo json_encode([
+                'codigo' => 1,
+                'mensaje' => 'Productos comprados obtenidos correctamente',
+                'data' => $data
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Error al obtener los productos comprados',
+                'detalle' => $e->getMessage(),
+            ]);
+        }
     }
-}
 }

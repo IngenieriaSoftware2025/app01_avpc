@@ -12,7 +12,7 @@
                         <div class="row g-4 mb-3">
                             <div class="col-md-6">
                                 <label for="producto_nombre" class="form-label fw-semibold">Nombre del Producto</label>
-                                <input type="text" class="form-control form-control-lg rounded-3" id="producto_nombre" name="producto_nombre" >
+                                <input type="text" class="form-control form-control-lg rounded-3" id="producto_nombre" name="producto_nombre">
                             </div>
                             <div class="col-md-6">
                                 <label for="producto_cantidad" class="form-label fw-semibold">Cantidad</label>
@@ -44,7 +44,7 @@
                                 <i class="bi bi-pen me-2"></i>Modificar
                             </button>
                             <button class="btn btn-secondary btn-lg px-4 shadow-sm rounded-pill" type="reset" id="BtnLimpiar">
-                               <i class="bi bi-magic me-2"></i>Limpiar
+                                <i class="bi bi-magic me-2"></i>Limpiar
                             </button>
                         </div>
                     </form>
@@ -60,7 +60,7 @@
                     <h3 class="text-center mb-4">LISTADO DE PRODUCTOS</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden" id="TableProductos">
-                    
+
                         </table>
                     </div>
                 </div>
@@ -75,12 +75,12 @@
                     <h3 class="text-center mb-4">PRODUCTOS COMPRADOS</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden w-100" id="TableComprados">
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<script src="<?= asset('build/js/productos/index.js') ?>"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="<?= asset('build/js/productos/index.js') ?>"></script>
