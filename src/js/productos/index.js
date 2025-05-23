@@ -11,7 +11,7 @@ const BtnLimpiar = document.getElementById('BtnLimpiar');
 
 
 const GuardarProducto = async (event) => {
-    
+
     event.preventDefault();
     BtnGuardar.disabled = true;
 
@@ -117,7 +117,6 @@ const BuscarProductos = async () => {
 
 
 
-
 const datatable = new DataTable('#TableProductos', {
     dom: `
         <"row mt-3 justify-content-between" 
@@ -135,11 +134,19 @@ const datatable = new DataTable('#TableProductos', {
     data: [],
     order: [[3, 'asc'], [4, 'desc']],
     columns: [
-        { title: 'No.', data: 'producto_id', width: '5%', render: (data, type, row, meta) => meta.row + 1 },
-        { title: 'Producto', data: 'producto_nombre', width: '20%' },
-        { title: 'Cantidad', data: 'producto_cantidad', width: '10%' },
-        { title: 'Categoría', data: 'categoria_nombre', width: '15%' }, {
-            title: 'Prioridad', data: 'producto_prioridad', width: '12%', render: (data, type, row) => {
+        { title: 'No.', data: 'producto_id', render: (data, type, row, meta) => meta.row + 1 },
+        { title: 'Producto', data: 'producto_nombre', },
+        { title: 'Cantidad', data: 'producto_cantidad', },
+        {
+            title: 'Categoría', data: 'categoria_nombre', render: (data) => {
+                let color = 'bg-secondary';
+                if (data === 'Alimentos') color = 'bg-success';
+                if (data === 'Limpieza') color = 'bg-info';
+                if (data === 'Hogar') color = 'bg-warning';
+                return `<span class="badge ${color} text-white">${data}</span>`;
+            }
+        }, {
+            title: 'Prioridad', data: 'producto_prioridad', render: (data, type, row) => {
                 if (data == "A") {
                     return "ALTA"
                 } else if (data == "M") {
@@ -179,7 +186,7 @@ const datatable = new DataTable('#TableProductos', {
                             <i class='bi bi-pencil-square'></i>Modificar
                         </button>`;
 
-    
+
                 if (row.producto_comprado == 0) {
                     botones += `
                         <button class='btn btn-success btn-sm marcar-comprado mx-1' 
@@ -215,7 +222,7 @@ const CargarCategorias = async () => {
 
         if (codigo == 1) {
             const select = document.getElementById('producto_categoria_id');
-            select.innerHTML = '<option value="">-- Seleccione la categoría --</option>';
+            select.innerHTML = '<option value="">Seleccione categoría</option>';
 
             data.forEach(categoria => {
                 const option = document.createElement('option');
@@ -229,7 +236,7 @@ const CargarCategorias = async () => {
     }
 }
 
-    const llenarFormulario = (event) => {
+const llenarFormulario = (event) => {
     const datos = event.currentTarget.dataset
 
     document.getElementById('producto_id').value = datos.id
@@ -378,7 +385,7 @@ const MarcarComprado = async (e) => {
 
         if (codigo == 1) {
             BuscarProductos();
-            BuscarProductosComprados(); 
+            BuscarProductosComprados();
         }
     } catch (error) {
         console.log(error)
@@ -394,22 +401,24 @@ const datatableComprados = new DataTable('#TableComprados', {
         { title: 'Producto', data: 'producto_nombre' },
         { title: 'Cantidad', data: 'producto_cantidad' },
         { title: 'Categoría', data: 'categoria_nombre' },
-        { title: 'Prioridad', data: 'producto_prioridad', render: (data, type, row) => {
-            if (data == "A") {
-                return "ALTO"
-            } else if (data == "M") {
-                return "MEDIO"
-            } else if (data == "B") {
-                return "BAJO"
+        {
+            title: 'Prioridad', data: 'producto_prioridad', render: (data, type, row) => {
+                if (data == "A") {
+                    return "ALTO"
+                } else if (data == "M") {
+                    return "MEDIO"
+                } else if (data == "B") {
+                    return "BAJO"
+                }
             }
-        }}
+        }
     ]
 });
 
 
 
 const BuscarProductosComprados = async () => {
-    const url = '/app01_avpc/productos/buscarCompradosAPI';  
+    const url = '/app01_avpc/productos/buscarCompradosAPI';
     const config = {
         method: 'GET'
     }
@@ -422,7 +431,7 @@ const BuscarProductosComprados = async () => {
         if (codigo == 1) {
             datatableComprados.clear().draw();
             datatableComprados.rows.add(data).draw();
-            
+
 
             document.getElementById('SeccionComprados').style.display = 'block';
         }
