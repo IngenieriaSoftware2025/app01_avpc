@@ -11,10 +11,14 @@ use MVC\Router;
 class ProductoController extends ActiveRecord
 {
 
+
+
     public function renderizarPagina(Router $router)
     {
         $router->render('productos/index', []);
     }
+
+
 
     public static function guardarAPI()
     {
@@ -31,6 +35,9 @@ class ProductoController extends ActiveRecord
             ]);
             return;
         }
+
+
+
 
         $_POST['producto_cantidad'] = filter_var($_POST['producto_cantidad'], FILTER_VALIDATE_INT);
 
@@ -102,6 +109,11 @@ class ProductoController extends ActiveRecord
         }
     }
 
+
+
+
+
+
     public static function buscarAPI()
     {
         try {
@@ -133,6 +145,10 @@ class ProductoController extends ActiveRecord
             ]);
         }
     }
+
+
+
+
 
     public static function modificarAPI()
     {
@@ -170,7 +186,7 @@ class ProductoController extends ActiveRecord
 
         if ($prioridad == "A" || $prioridad == "M" || $prioridad == "B") {
 
-            // Verificar si el producto ya existe en la misma categoría (excluyendo el actual)
+         
             $sql_verificar = "SELECT COUNT(*) as total FROM productos 
                             WHERE producto_nombre = '" . $_POST['producto_nombre'] . "' 
                             AND producto_categoria_id = " . $_POST['producto_categoria_id'] . " 
@@ -244,6 +260,12 @@ class ProductoController extends ActiveRecord
         }
     }
 
+
+
+
+
+
+
     public static function marcarCompradoAPI()
     {
         try {
@@ -270,6 +292,11 @@ class ProductoController extends ActiveRecord
         }
     }
 
+
+
+
+
+
     public static function categoriasAPI()
     {
         try {
@@ -294,6 +321,9 @@ class ProductoController extends ActiveRecord
 
 
 
+
+
+    
 
     public static function buscarCompradosAPI()
 {

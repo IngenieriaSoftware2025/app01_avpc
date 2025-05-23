@@ -23,13 +23,13 @@
                             <div class="col-md-6">
                                 <label for="producto_categoria_id" class="form-label fw-semibold">Categoría</label>
                                 <select name="producto_categoria_id" class="form-select form-select-lg rounded-3" id="producto_categoria_id">
-                                    <option value="">eleccione una categoría</option>
+                                    <option value="">seleccione categoría</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="producto_prioridad" class="form-label fw-semibold">Prioridad</label>
                                 <select name="producto_prioridad" class="form-select form-select-lg rounded-3" id="producto_prioridad">
-                                    <option value="">Seleccione la prioridad</option>
+                                    <option value="">Seleccione prioridad</option>
                                     <option value="A">Alta</option>
                                     <option value="M">Media</option>
                                     <option value="B">Baja</option>
@@ -38,13 +38,13 @@
                         </div>
                         <div class="d-flex justify-content-center gap-3 mt-4">
                             <button class="btn btn-lg px-4 shadow-sm rounded-pill" type="submit" id="BtnGuardar" style="background-color: #1e5f8a; color: white;">
-                                <i class="bi bi-save me-2"></i>Guardar
+                                <i class="bi bi-check-lg me-2"></i>Guardar
                             </button>
                             <button class="btn btn-warning btn-lg px-4 shadow-sm rounded-pill d-none" type="button" id="BtnModificar">
-                                <i class="bi bi-pencil-square me-2"></i>Modificar
+                                <i class="bi bi-pen me-2"></i>Modificar
                             </button>
                             <button class="btn btn-secondary btn-lg px-4 shadow-sm rounded-pill" type="reset" id="BtnLimpiar">
-                                <i class="bi bi-eraser me-2"></i>Limpiar
+                               <i class="bi bi-magic me-2"></i>Limpiar
                             </button>
                         </div>
                     </form>
@@ -57,7 +57,7 @@
         <div class="col-11">
             <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #1e5f8a !important;">
                 <div class="card-body">
-                    <h3 class="text-center mb-4">Lista de Productos</h3>
+                    <h3 class="text-center mb-4">LISTA DE PRODUCTOS</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden" id="TableProductos">
                     
@@ -69,14 +69,12 @@
     </div>
 
     <div class="row justify-content-center mt-5" id="SeccionComprados" style="display: none;">
-        <div class="col-11">
+        <div class="col-13">
             <div class="card shadow-lg border-0 rounded-3" style="border-left: 5px solid #28a745 !important;">
                 <div class="card-body">
-                    <h3 class="text-center mb-4">Productos Comprados</h3>
+                    <h3 class="text-center mb-4">PRODUCTOS COMPRADOS</h3>
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden" id="TableComprados">
-                        </table>
-                    </div>
+                        <table class="table table-striped table-hover table-bordered align-middle rounded-3 overflow-hidden w-100" id="TableComprados">
                 </div>
             </div>
         </div>

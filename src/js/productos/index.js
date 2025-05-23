@@ -11,6 +11,7 @@ const BtnLimpiar = document.getElementById('BtnLimpiar');
 
 
 const GuardarProducto = async (event) => {
+    
     event.preventDefault();
     BtnGuardar.disabled = true;
 
