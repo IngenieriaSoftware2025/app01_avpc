@@ -17,7 +17,7 @@ class ProductoController extends ActiveRecord
     //Esta función se encarga de renderizar la vista de productos
     //Recibe el objeto Router como parámetro y lo utiliza para renderizar la vista
     //La vista se encuentra en la carpeta views/productos/index.php
-    
+
     public function renderizarPagina(Router $router)
     {
         $router->render('productos/index', []);
@@ -179,7 +179,7 @@ class ProductoController extends ActiveRecord
     //Recibe los datos del producto a través de un formulario y los valida
     //Si los datos son válidos, se modifica el producto en la base de datos
     //Si los datos no son válidos, se devuelve un mensaje de error
-    
+
     public static function modificarAPI()
     {
         getHeadersApi();
@@ -276,7 +276,7 @@ class ProductoController extends ActiveRecord
     //Si el id es válido, se elimina el producto en la base de datos
     //Si el id no es válido, se devuelve un mensaje de error
     //Eliminamos el producto de la base de datos
-    
+
     public static function EliminarAPI()
     {
         try {
@@ -284,11 +284,23 @@ class ProductoController extends ActiveRecord
 
             $ejecutar = Productos::EliminarProducto($id);
 
-            http_response_code(200);
-            echo json_encode([
-                'codigo' => 1,
-                'mensaje' => 'El producto ha sido eliminado correctamente'
-            ]);
+            if ($ejecutar) {
+                http_response_code(200);
+                echo json_encode([
+                    'codigo' => 1,
+                    'mensaje' => 'El producto ha sido eliminado correctamente'
+                ]);
+                return;
+            }
+
+            //no se estaba utilizando o ejecutando la variable $ejecutar
+            // http_response_code(200);
+            // echo json_encode([
+            //     'codigo' => 1,
+            //     'mensaje' => 'El producto ha sido eliminado correctamente'
+            // ]);
+
+
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
@@ -309,7 +321,7 @@ class ProductoController extends ActiveRecord
     //Recibe el id del producto a través de un formulario y lo valida
     //Si el id es válido, se marca el producto como comprado en la base de datos
     //Si el id no es válido, se devuelve un mensaje de error
-    
+
     public static function marcarCompradoAPI()
     {
         try {

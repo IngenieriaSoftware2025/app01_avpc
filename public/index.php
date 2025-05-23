@@ -25,4 +25,6 @@ $router->post('/productos/marcarCompradoAPI', [ProductoController::class, 'marca
 $router->get('/productos/categoriasAPI', [ProductoController::class, 'categoriasAPI']);
 $router->get('/productos/buscarCompradosAPI', [ProductoController::class, 'buscarCompradosAPI']);
 
+
 $router->comprobarRutas();
+//este es el archivo de rutas, se encarga de redirigir las peticiones a los controladores correspondientes

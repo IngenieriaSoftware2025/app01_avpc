@@ -15,7 +15,7 @@ try {
 } catch (PDOException $e) {
     echo json_encode([
         "detalle" => $e->getMessage(),       
-        "mensaje" => "Error de conexión bd",
+        "mensaje" => "ERROR DE CONDEXION A LA BASE DE DATOS",
 
         "codigo" => 5,
     ]);

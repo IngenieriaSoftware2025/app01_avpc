@@ -2,7 +2,8 @@
 
 namespace Model;
 
-class Productos extends ActiveRecord {
+class Productos extends ActiveRecord
+{
 
     public static $tabla = 'productos';
     public static $columnasDB = [
@@ -23,7 +24,8 @@ class Productos extends ActiveRecord {
     public $producto_comprado;
     public $producto_situacion;
 
-    public function __construct($args = []){
+    public function __construct($args = [])
+    {
         $this->producto_id = $args['producto_id'] ?? null;
         $this->producto_nombre = $args['producto_nombre'] ?? '';
         $this->producto_cantidad = $args['producto_cantidad'] ?? 1;
@@ -33,8 +35,12 @@ class Productos extends ActiveRecord {
         $this->producto_situacion = $args['producto_situacion'] ?? 1;
     }
 
-    public static function EliminarProducto($id){
-        $sql = "DELETE FROM productos WHERE producto_id = $id";
+    public static function EliminarProducto($id_eliminado)
+    {
+        // $sql = "DELETE FROM productos WHERE producto_id = $id_eliminado"; si se quiere eliminar el producto de la base de datos
+
+        $sql = "UPDATE productos SET producto_situacion = 0 WHERE producto_id = $id_eliminado";
+
         return self::SQL($sql);
     }
 }
