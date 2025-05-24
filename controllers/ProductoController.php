@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Exception;
+
 use Model\ActiveRecord;
 use Model\Productos;
 use Model\Categorias;
@@ -15,7 +16,7 @@ class ProductoController extends ActiveRecord
     //Recibe el objeto Router como parámetro y lo utiliza para renderizar la vista
     //La vista se encuentra en la carpeta views/productos/index.php
 
-    public function renderizarPagina(Router $router) //renderizar muestra HTML
+    public function renderizarPaginaa(Router $router) //renderizar muestra HTML
     {
         $router->render('productos/index', []);
     }
@@ -44,7 +45,6 @@ class ProductoController extends ActiveRecord
             ]);
             return;
         }
-
 
 
         //Validamos la cantidad, que sea un número entero mayor a 0

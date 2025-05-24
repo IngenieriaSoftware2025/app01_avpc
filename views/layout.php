@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
+    <nav class="navbar navbar-expand-lg dropdown-menu navbar-dark  bg-dark">
 
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/app01_avpc/productos">
+                        <a class="nav-link" href="/app01_avpc/chancho/perro/gato">
                             <i class="bi bi-cart3 me-2"></i>Lista de Compras
                         </a>
                     </li>
